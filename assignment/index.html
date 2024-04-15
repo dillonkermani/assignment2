@@ -35,7 +35,7 @@
                                 <table class="table is-striped is-fullwidth is-narrow">      
                                     <tr>
                                         <td><strong>1</strong> Wages, salaries, and tips. This should be shown in box 1 of your Form(s) W-2. Attach your Form(s) W-2.</td>
-                                        <td><input class="input is-small" type="number"></td>
+                                        <td><input class="input is-small" type="number" name="value-1" oninput="updateTotals()"></td>
                                     </tr>
                                     <tr>
                                         <td><strong>2</strong> Taxable interest from 1099 forms.</td>
@@ -49,7 +49,7 @@
 
                                     <tr>
                                         <td><strong>4</strong> Add lines 1, 2, and 3. This is your adjusted gross income.</td>
-                                        <td><input class="input is-small" type="number"></td>
+                                        <td><input class="input is-small" type="number" :value="getRow4()" readonly></td>
                                     </tr>
 
                                     <tr>

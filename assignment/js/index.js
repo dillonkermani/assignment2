@@ -11,6 +11,9 @@ app.data = {
     },
     methods: {
         // Complete.
+        getRow4() {
+            return -1;
+        }
     }
 };
 
