@@ -25,7 +25,7 @@
             <h1 class="title">2023 Simplified Tax Form</h1>
             <!-- Put your solution here -->
 
-            <form>
+            <form class>
                 <table class="table is-fullwidth is-narrow">      
                     <tbody>
 
@@ -66,9 +66,7 @@
                                         <td><strong>6</strong> Subtract line 5 from line 4. If line 5 is larger than line 4, enter -0-. This is your taxable income.</td>
                                         <td><input class="input is-small" type="number"></td>
                                     </tr>
-
                                     
-
                                 </table>
                             </td>
                             
@@ -79,11 +77,27 @@
                             <td>
                                 <table class="table is-striped is-fullwidth is-narrow">      
                                     <tr>
-                                        <td><strong>1</strong> Wages, salaries, and tips.Wages, salaries, and tips.Wages, salaries, and tips.</td>
+                                        <td><strong>7</strong> Federal income tax withheld from Form(s) W-2 and 1099.</td>
                                         <td><input class="input is-small" type="number"></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>2</strong> Wages, salaries, and tips.Wages, salaries, and tips.Wages, salaries, and tips.</td>
+                                        <td><strong>8</strong> Earned income credit (EIC)</td>
+                                        <td><input class="input is-small" type="number"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>9</strong> Add lines 7 and 8a. These are your total payments and credits.</td>
+                                        <td><input class="input is-small" type="number"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>10</strong> Tax. Use the amount on line 6 above to find your tax in the tax table in the in the instructions. Then, enter the tax from the table on this line.</td>
+                                        <td><input class="input is-small" type="number"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>11</strong> Other Taxes</td>
+                                        <td><input class="input is-small" type="number"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>12</strong> Add lines 10 and 11. This is your total tax.</td>
                                         <td><input class="input is-small" type="number"></td>
                                     </tr>
 
@@ -91,6 +105,31 @@
                             </td>
                             
                         </tr>
+
+                        <tr>
+                            <td>Refund</td>
+                            <td>
+                                <table class="table is-striped is-fullwidth is-narrow">      
+                                    <tr>
+                                        <td><strong>13</strong> If line 9 is larger than line 12, subtract line 12 from line 9. This is your refund. If Form 8888 is attached, check here.</td>
+                                        <td><input class="input is-small" type="number"></td>
+                                    </tr>
+                                </table>
+                            </td>                
+                        </tr>
+
+                        <tr>
+                            <td>Amount You Owe</td>
+                            <td>
+                                <table class="table is-striped is-fullwidth is-narrow">      
+                                    <tr>
+                                        <td><strong>14</strong> If line 12 is larger than line 9, subtract line 9 from line 12. This is the amount you owe. For details on how to pay, see instructions.</td>
+                                        <td><input class="input is-small" type="number"></td>
+                                    </tr>
+                                </table>
+                            </td>                 
+                        </tr>
+
                         
                     </tbody>
                 </table>
