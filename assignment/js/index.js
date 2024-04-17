@@ -21,14 +21,17 @@ const app = Vue.createApp({
                 filingJointly: false
             },
             rates: [
-                { min: 0,     max: 11250, rate: 10 },
-                { min: 11251, max: 45925, rate: 12 },
-                { min: 45926, max: 94500, rate: 22 },
-                { min: 94501, max: 182950, rate: 24 },
-                { min: 182951, max: 365800, rate: 32 },
-                { min: 365801, max: 555600, rate: 35 },
-                { min: 555601, max: Infinity, rate: 37 }
+                [10, 0, 0], // Rate, Min for Single, Min for Joint
+                [12, 11000, 22000],
+                [22, 44725, 89450],
+                [24, 95375, 190750],
+                [32, 182100, 364200],
+                [35, 231250, 462500],
+                [37, 578125, 693750]
             ]
+            
+            
+            
         };
     },
     methods: {
@@ -53,16 +56,31 @@ const app = Vue.createApp({
         },
         calculateTax(income) {
             let tax = 0;
-            for (const bracket of this.rates) {
-                if (income > bracket.min) {
-                    const taxableIncome = Math.min(income - bracket.min, bracket.max - bracket.min);
-                    tax += taxableIncome * (bracket.rate / 100);
-                    income -= taxableIncome;
-                    if (income <= 0) break;
+            const filingJointly = this.values.filingJointly;
+        
+            for (let i = 0; i < this.rates.length; i++) {
+                const rate = this.rates[i][0];
+                const min = filingJointly ? this.rates[i][2] : this.rates[i][1];
+                const max = (i === this.rates.length - 1) ? Infinity : (filingJointly ? this.rates[i + 1][2] : this.rates[i + 1][1]);
+        
+                if (income > min) {
+                    const taxableIncome = Math.min(income - min, max - min);
+                    tax += (taxableIncome * rate) / 100;
+        
+                    if (income <= max) {
+                        break;
+                    }
                 }
             }
-            return tax;
+        
+            return tax;// Round to the nearest whole number for final tax calculation
         }
+        
+        
+        
+        
+        
+        
     },
     mounted() {
         this.updateAll();
