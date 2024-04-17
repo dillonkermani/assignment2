@@ -1,38 +1,49 @@
 "use strict";
 
-let app = {};
-
-app.data = {    
-    values: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0,
-        8: 0,
-        9: 0,
-        10: 0,
-        11: 0,
-        12: 0,
-        13: 0,
-        14: 0,
-        filingJointly: false
+const app = Vue.createApp({
+    data() {
+        return {
+            values: {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 13850, // Default for an individual
+                6: 0,
+                7: 0,
+                8: 0,
+                9: 0,
+                10: 0,
+                11: 0,
+                12: 0,
+                13: 0,
+                14: 0,
+                filingJointly: false
+            },
+            rates: [
+                { min: 0,     max: 11250, rate: 10 },
+                { min: 11251, max: 45925, rate: 12 },
+                { min: 45926, max: 94500, rate: 22 },
+                { min: 94501, max: 182950, rate: 24 },
+                { min: 182951, max: 365800, rate: 32 },
+                { min: 365801, max: 555600, rate: 35 },
+                { min: 555601, max: Infinity, rate: 37 }
+            ]
+        };
     },
-    rates: [
-        [10, 0, 0],
-        [12, 11000, 22000],
-        [22, 44725, 89450],
-        [24, 95375, 190750],
-        [32, 182100, 364200],
-        [35, 231250, 462500],
-        [37, 578125, 693750]
-    ],
     methods: {
-        updateTotals() {
-            this.values[4] = this.values[1] + this.values[2] + this.values[3];
+        updateAll() {
+            this.updateRow4();
+            this.updateRow5();
+            this.updateTaxAndTotals();
+        },
+        updateRow4() {
+            this.values[4] = Number(this.values[1]) + Number(this.values[2]) + Number(this.values[3]);
+        },
+        updateRow5() {
             this.values[5] = this.values.filingJointly ? 27700 : 13850;
+        },
+        updateTaxAndTotals() {
             this.values[6] = Math.max(0, this.values[4] - this.values[5]);
             this.values[9] = this.values[7] + this.values[8];
             this.values[10] = this.calculateTax(this.values[6]);
@@ -42,20 +53,18 @@ app.data = {
         },
         calculateTax(income) {
             let tax = 0;
-            for (let i = 0; i < this.rates.length; i++) {
-                const rate = this.rates[i];
-                if (income > rate[2]) {
-                    tax += (rate[2] - (i > 0 ? this.rates[i - 1][2] : 0)) * rate[0] / 100;
-                } else {
-                    tax += (income - (i > 0 ? this.rates[i - 1][2] : 0)) * rate[0] / 100;
-                    break;
+            for (const bracket of this.rates) {
+                if (income > bracket.min) {
+                    const taxableIncome = Math.min(income - bracket.min, bracket.max - bracket.min);
+                    tax += taxableIncome * (bracket.rate / 100);
+                    income -= taxableIncome;
+                    if (income <= 0) break;
                 }
             }
             return tax;
         }
+    },
+    mounted() {
+        this.updateAll();
     }
-};
-
-app.vue = Vue.createApp(app.data).mount("#app");
-app.vue.recompute();
-
+}).mount("#app");
